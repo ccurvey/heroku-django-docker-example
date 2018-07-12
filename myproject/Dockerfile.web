@@ -1,0 +1,20 @@
+FROM example:latest
+
+#############################################################################
+## add our code to the image.  We could refactor this into the base Dockerfile,
+## but it is painful to go through all the Unix building every step.  Better to
+## just repeat this code in the leaf Dockerfiles and not worry about it.
+ADD . /opt/webapp
+RUN chown -R myuser:myuser /opt/webapp
+
+#############################################################################
+# change context to our non-root user
+USER myuser
+
+############################################################################
+## run collectstatic to grab our "stuff"
+RUN python manage.py collectstatic --noinput
+
+###########################################################################
+## run the server to handle web requests
+CMD gunicorn --bind 0.0.0.0:$PORT myproject.wsgi

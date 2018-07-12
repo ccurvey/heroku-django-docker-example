@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -124,3 +125,33 @@ STATIC_URL = '/static/'
 ## your database setup
 import dj_database_url
 DATABASES['default'] = dj_database_url.config()
+
+############################################################################
+## RQ setup
+INSTALLED_APPS.append('django_rq')
+RQ_QUEUES = {
+    'larry-queue': {
+        'HOST': '10.1.50.230',
+        'PORT': 6379,
+        'DB': 0,
+    },
+    'curly-queue': {
+        'HOST': '10.1.50.230',
+        'PORT': 6379,
+        'DB': 0,
+    },
+    'moe-queue': {
+        'HOST': '10.1.50.230',
+        'PORT': 6379,
+        'DB': 0,
+    }
+}
+
+###########################################################################
+## Whitenoise Setup.  Note that the Whitenoise Middleware is set up above,
+## because it must be in a vary particular point in the stack
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'project_static'),
+)

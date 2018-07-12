@@ -127,22 +127,24 @@ import dj_database_url
 DATABASES['default'] = dj_database_url.config()
 
 ############################################################################
-## RQ setup
+## RQ setup.
+## Note 1: 10.1.50.230 is the current internal IP for my
+##         system.  You will have to change it to match the IP address of
+##         your system.
+## Note 2: The environment variable OPENREDIS_URL might be different depending
+##         on which Redis provider you have chosen in the Heroku environment
 INSTALLED_APPS.append('django_rq')
 RQ_QUEUES = {
     'larry-queue': {
-        'HOST': '10.1.50.230',
-        'PORT': 6379,
+        'URL': os.getenv("OPENREDIS_URL", "redis://10.1.50.230:6379"),
         'DB': 0,
     },
     'curly-queue': {
-        'HOST': '10.1.50.230',
-        'PORT': 6379,
+        'URL': os.getenv("OPENREDIS_URL", "redis://10.1.50.230:6379"),
         'DB': 0,
     },
     'moe-queue': {
-        'HOST': '10.1.50.230',
-        'PORT': 6379,
+        'URL': os.getenv("OPENREDIS_URL", "redis://10.1.50.230:6379"),
         'DB': 0,
     }
 }

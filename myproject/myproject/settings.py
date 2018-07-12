@@ -151,7 +151,9 @@ RQ_QUEUES = {
 
 ###########################################################################
 ## Whitenoise Setup.  Note that the Whitenoise Middleware is set up above,
-## because it must be in a vary particular point in the stack
+## because it must be in a vary particular point in the stack.  The GitHub
+## Wiki for this project goes into some detail about how these variables
+## interact
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = (

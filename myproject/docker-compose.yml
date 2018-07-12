@@ -1,0 +1,30 @@
+version: "3"
+services:
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile.web
+        ports:
+            - "8000:8000"
+        environment:
+            - PORT=8000
+        env_file:
+            - .env
+    larry:
+        build:
+            context: .
+            dockerfile: Dockerfile.larry
+        env_file:
+            - .env
+    curly:
+        build:
+            context: .
+            dockerfile: Dockerfile.curly
+        env_file:
+            - .env
+    moe:
+        build:
+            context: .
+            dockerfile: Dockerfile.larry
+        env_file:
+            - .env

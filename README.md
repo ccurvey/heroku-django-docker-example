@@ -37,8 +37,8 @@ to run them within a Docker container.
 ## Dockerfile Structure
 
 We have a base Dockerfile that prepares an image for us. Then we have a series
-of related Dockerfiles (Dockerfile.web, Dockerfile.background1,
-Dockerfile.background2) that inherit from the base Dockerfile.
+of related Dockerfiles (Dockerfile.web, Dockerfile.larry, Dockerfile.curly)
+that inherit from the base Dockerfile.
 
 ## Building Docker Images
 
@@ -55,7 +55,7 @@ Note that the use of "example" as a tag is important -- it is referenced in the
 
 To build a specific image:
 
-   $ docker build --tag example/web --file Dockerfile.web .
+    $ docker build --tag example/web --file Dockerfile.web .
 
 (replace "web" with the specfic file you want)
 
@@ -79,9 +79,40 @@ You have to specify the ports to get everything tied together
 
     $ docker run example/larry  (or curly, or moe)
 
-* Create a base Dockerfile, then a bunch of service-specific Dockerfiles
-
 # Running Everything with Docker-Compose
 
+Being able to run your containers individually is great, but you don't want to
+have to start and stop services individually. That's where docker-compose
+comes in.
+
+The supplied docker-compose.yml file will allow you to start all your services
+with
+
+    $ docker-compose up --build
+
+Note that if you change something that requires the base image to be re-built
+(adding to your Unix installation with `apt-get`or your Python environment
+with `pip`), you have to rebuild the base image yourself, using
+
+    $ docker build --tag=example --file=Dockerfile .
 
 # Environment Variables
+
+Eventually, you may end up with a situation where you will need environment
+variables at build time (usually because they are referenced in your settings
+file).  If that is necessary, you can safely put these in your Dockerfile.web
+as
+
+    ENV MYVARIABLE placeholder
+
+And Heroku will override that "placeholder" value at runtime.
+
+# Deploying To Heroku
+
+Once you have things set up and are ready to push to Heroku.
+
+    $ docker build --tag=example --file=Dockerfile
+    $ heroku container:push --recursive --app=name-of-your-app
+    $ heroku container:release --app=name-of-your-app
+
+And that is it!

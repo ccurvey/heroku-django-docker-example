@@ -1,0 +1,4 @@
+This folder is where you should put site-wide static assets.  For example,
+if you were building a site based on Bootstrap and jQuery, you would put the
+CSS and JS files in here, so that they are available to all the apps in your
+project.

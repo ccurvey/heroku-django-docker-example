@@ -1,10 +1,14 @@
 #############################################################################
 #Grab the latest OS image
-FROM heroku/heroku:16
+FROM heroku/heroku:18
 
 #############################################################################
 # install python and pip
+ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
+
+#############################################################################
+# install python and pip
 RUN apt-get install -y \
   python \
   python-pip

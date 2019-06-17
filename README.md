@@ -75,6 +75,9 @@ You have to specify the ports to get everything tied together
 
     $ docker run -p 8000:8000 -e PORT=8000 example/web
 
+PROTIP:  add "-t" to the command line if you want to see the output from
+print() statements in Django.
+
 ## Worker Processes
 
     $ docker run example/larry  (or curly, or moe)
